@@ -47,7 +47,7 @@ int hour = 15, minute = 8, second = 50;
 int led_buffer[4] = {1, 2, 3, 4};
 int index_led = 0;
 const int MAX_LED = 4;
-const int set_counter = 15;
+const int set_counter = 25;
 int counter = set_counter;
 /* USER CODE END PV */
 
