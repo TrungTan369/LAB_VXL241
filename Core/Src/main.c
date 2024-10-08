@@ -128,8 +128,7 @@ int main(void)
   setTimer0(1000);
   while (1)
   {
-	    //HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, SET); // tắt
-	  // ex9 run
+	  // ex10 run
 	  if(timer0_flag == 1){
 		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 		  setTimer0(1000);
@@ -140,7 +139,7 @@ int main(void)
 	  }
 	  if (index_led_matrix >= MAX_LED_MATRIX) {
 	  		index_led_matrix = 0;
-	  		 swapArray();
+	  		swapArray();
 	  	}
 	  //HAL_Delay(1000);
     /* USER CODE END WHILE */
