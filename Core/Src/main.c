@@ -56,7 +56,7 @@ int counter = set_counter;
 uint8_t row_data;
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-uint8_t matrix_buffer[8] = {0xfe, 0x09, 0x09, 0x09, 0xfe, 0x00, 0x00, 0x00}; // character A
+uint8_t matrix_buffer[8] = {0x00, 0xfe, 0x09, 0x09, 0x09, 0xfe, 0x00, 0x00}; // character A
 
 /* USER CODE END PV */
 
@@ -69,6 +69,7 @@ void display7SEG(int);
 void update7SEG(int);
 void updateClockBuffer();
 void updateLEDMatrix(int);
+void swapArray();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -139,6 +140,7 @@ int main(void)
 	  }
 	  if (index_led_matrix >= MAX_LED_MATRIX) {
 	  		index_led_matrix = 0;
+	  		 swapArray();
 	  	}
 	  //HAL_Delay(1000);
     /* USER CODE END WHILE */
@@ -322,12 +324,10 @@ void updateLEDMatrix(int index){
 	   case 7:
 		   HAL_GPIO_WritePin(ENM7_GPIO_Port, ENM7_Pin, RESET);
 		   break;
-
 	   default:
 		   break;
        }
-    //{0x18,0x24,0x42,0x42,0x7E,0x42,0x42,0x42};// character A
-//uint8_t matrix_buffer[8] = {0x70,0x88,0x88,0xf8,0x88,0x88,0x88,0x88}; // character A
+    // uint8_t matrix_buffer[8] = {0xfe, 0x09, 0x09, 0x09, 0xfe, 0x00, 0x00, 0x00}; // character A
 	row_data = matrix_buffer[index];
 	HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, (row_data & 0x01) ? RESET : SET);
 	HAL_GPIO_WritePin(ROW1_GPIO_Port, ROW1_Pin, (row_data & 0x02) ? RESET : SET);
@@ -337,17 +337,14 @@ void updateLEDMatrix(int index){
 	HAL_GPIO_WritePin(ROW5_GPIO_Port, ROW5_Pin, (row_data & 0x20) ? RESET : SET);
 	HAL_GPIO_WritePin(ROW6_GPIO_Port, ROW6_Pin, (row_data & 0x40) ? RESET : SET);
 	HAL_GPIO_WritePin(ROW7_GPIO_Port, ROW7_Pin, (row_data & 0x80) ? RESET : SET);
-
-//	HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, SET);
-//	HAL_GPIO_WritePin(ROW1_GPIO_Port, ROW1_Pin, RESET);
-//	HAL_GPIO_WritePin(ROW2_GPIO_Port, ROW2_Pin, RESET);
-//	HAL_GPIO_WritePin(ROW3_GPIO_Port, ROW3_Pin, RESET);
-//	HAL_GPIO_WritePin(ROW4_GPIO_Port, ROW4_Pin, RESET);
-//	HAL_GPIO_WritePin(ROW5_GPIO_Port, ROW5_Pin, RESET);
-//	HAL_GPIO_WritePin(ROW6_GPIO_Port, ROW6_Pin, RESET);
-//	HAL_GPIO_WritePin(ROW7_GPIO_Port, ROW7_Pin, RESET);
 }
-
+void swapArray(){
+    int temp = matrix_buffer[7];
+    for (int i = 7; i > 0; i--) {
+    	matrix_buffer[i] = matrix_buffer[i-1];
+    }
+    matrix_buffer[0] = temp;
+}
 void update7SEG(int index){
 	switch(index){
 		case 0:
