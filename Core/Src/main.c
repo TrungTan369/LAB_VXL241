@@ -97,8 +97,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, GPIO_PIN_RESET);
-	  //HAL_Delay(1000);
+	 // this is ex2
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
