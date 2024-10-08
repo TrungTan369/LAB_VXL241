@@ -47,7 +47,8 @@ int hour = 15, minute = 8, second = 50;
 int led_buffer[4] = {1, 2, 3, 4};
 int index_led = 0;
 const int MAX_LED = 4;
-int counter = 25;
+const int set_counter = 15;
+int counter = set_counter;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -116,26 +117,26 @@ int main(void)
   setTimer0(1000);
   while (1)
   {
-	  // ex 6 run
-	  if(second >= 60){
-		  second = 0;
-		  minute++;
-	  }
-	  if(minute >= 60){
-		  minute = 0;
-		  hour++;
-	  }
-	  if(hour >= 24){
-		  hour = 0;
-	  }
-	  updateClockBuffer();
-	  if(timer0_flag == 1){
-		  second++;
-		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-		  setTimer0(1000);
-	  }
+	  // ex 8 run
+	if(second >= 60){
+	  second = 0;
+	  minute++;
+	}
+	if(minute >= 60){
+	  minute = 0;
+	  hour++;
+	}
+	if(hour >= 24){
+	  hour = 0;
+	}
+	updateClockBuffer();
+	if(timer0_flag == 1){
+	  second++;
+	  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	  setTimer0(1000);
+	}
 	if(counter <= 0){
-		counter = 25;
+		counter = set_counter;
 		update7SEG(index_led++);
 	}
 	if (index_led >= MAX_LED) {
