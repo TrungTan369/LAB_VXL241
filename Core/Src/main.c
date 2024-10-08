@@ -97,7 +97,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  // ex 3 run
+	  // this is ex3
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
