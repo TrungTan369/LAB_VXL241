@@ -54,6 +54,7 @@ static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 void display7SEG(int);
 void update7SEG(int);
+void updateClockBuffer();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -111,11 +112,7 @@ int main(void)
 	  if(hour >= 24){
 		  hour = 0;
 	  }
-	  led_buffer[0] = hour / 10;
-	  led_buffer[1] = hour % 10;
-	  led_buffer[2] = minute / 10;
-	  led_buffer[3] = minute % 10;
-	  //updateClockBuffer();
+	  updateClockBuffer();
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
@@ -402,6 +399,12 @@ void display7SEG(int num){
 		HAL_GPIO_WritePin(SEG5_GPIO_Port, SEG5_Pin, RESET);
 		HAL_GPIO_WritePin(SEG6_GPIO_Port, SEG6_Pin, RESET);
 	}
+}
+void updateClockBuffer(){
+	led_buffer[0] = hour / 10;
+	led_buffer[1] = hour % 10;
+	led_buffer[2] = minute / 10;
+	led_buffer[3] = minute % 10;
 }
 /* USER CODE END 4 */
 
