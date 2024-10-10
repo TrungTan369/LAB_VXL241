@@ -230,8 +230,6 @@ static void MX_GPIO_Init(void)
 int counter = 50;
 int num = 0;
 int blink = 100;
-// hi hi toi la ex 2
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
 	counter --;
 	blink--;
@@ -240,36 +238,28 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
 		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 	}
 	if(counter <= 0){
+		HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, GPIO_PIN_SET);
 		counter = 50;
 		num++;
 		if(num >= 4) num = 0;
 		switch (num){
 			case 0:
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN2_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN3_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, GPIO_PIN_RESET);
 				display7SEG(num);
 				break;
 			case 1:
 				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN2_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN3_Pin, GPIO_PIN_SET);
 				display7SEG(num);
 				break;
 			case 2:
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, GPIO_PIN_SET);
 				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN2_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN3_Pin, GPIO_PIN_SET);
 				display7SEG(num);
 				break;
 			case 3:
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN2_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN3_Pin, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, GPIO_PIN_RESET);
 				display7SEG(num);
 				break;
 			default:
