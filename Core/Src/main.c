@@ -143,7 +143,6 @@ int main(void)
 	if (index_led >= MAX_LED) {
 		index_led = 0;
 	}
-	  //HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
