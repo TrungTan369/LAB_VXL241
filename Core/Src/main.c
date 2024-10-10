@@ -113,7 +113,7 @@ int main(void)
   setTimer0(1000);
   while (1)
   {
-	  // ex 6 run
+	  // ex 7 run
 	  if(second >= 60){
 		  second = 0;
 		  minute++;
@@ -125,13 +125,12 @@ int main(void)
 	  if(hour >= 24){
 		  hour = 0;
 	  }
-	  updateClockBuffer();
 	  if(timer0_flag == 1){
 		  second++;
+		  updateClockBuffer();
 		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 		  setTimer0(1000);
 	  }
-	  //HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
