@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00016362  00000000  00000000  0002aef0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00009563  00000000  00000000  00041252  2**0
+ 17 .debug_line   000094f6  00000000  00000000  00041252  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000822ba  00000000  00000000  0004a7b5  2**0
+ 18 .debug_str    000822ba  00000000  00000000  0004a748  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000cca6f  2**0
+ 19 .comment      00000053  00000000  00000000  000cca02  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000026c4  00000000  00000000  000ccac4  2**2
+ 20 .debug_frame  000026c4  00000000  00000000  000cca58  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -187,7 +187,6 @@ int main(void)
  80001d2:	f7ff ffbb 	bl	800014c <setTimer0>
   while (1)
   {
-	    //HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, SET); // tắt
 	  // ex9 run
 	  if(timer0_flag == 1){
  80001d6:	4b14      	ldr	r3, [pc, #80]	; (8000228 <main+0x74>)
@@ -230,7 +229,7 @@ int main(void)
  8000216:	4b07      	ldr	r3, [pc, #28]	; (8000234 <main+0x80>)
  8000218:	2200      	movs	r2, #0
  800021a:	601a      	str	r2, [r3, #0]
-	  		 swapArray();
+	  		swapArray();
  800021c:	f000 fa04 	bl	8000628 <swapArray>
 	  if(timer0_flag == 1){
  8000220:	e7d9      	b.n	80001d6 <main+0x22>
@@ -650,7 +649,6 @@ void updateLEDMatrix(int index){
  80004ae:	f000 fc83 	bl	8000db8 <HAL_GPIO_WritePin>
 		   break;
  80004b2:	e030      	b.n	8000516 <updateLEDMatrix+0xfe>
-
 	   case 1:
 		   HAL_GPIO_WritePin(ENM1_GPIO_Port, ENM1_Pin, RESET);
  80004b4:	2200      	movs	r2, #0
@@ -707,11 +705,11 @@ void updateLEDMatrix(int index){
  800050e:	f000 fc53 	bl	8000db8 <HAL_GPIO_WritePin>
 		   break;
  8000512:	e000      	b.n	8000516 <updateLEDMatrix+0xfe>
+
 	   default:
 		   break;
  8000514:	bf00      	nop
        }
-    // uint8_t matrix_buffer[8] = {0xfe, 0x09, 0x09, 0x09, 0xfe, 0x00, 0x00, 0x00}; // character A
 	row_data = matrix_buffer[index];
  8000516:	4a41      	ldr	r2, [pc, #260]	; (800061c <updateLEDMatrix+0x204>)
  8000518:	687b      	ldr	r3, [r7, #4]
