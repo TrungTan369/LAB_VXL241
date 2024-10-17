@@ -109,6 +109,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   setTimer0(SET_COUNTER0);
   setTimer1(SET_COUNTER1);
+  updateClockBuffer();
   while (1)
   {
 	  // ex 8 & ex9 run
