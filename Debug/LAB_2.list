@@ -189,7 +189,6 @@ int main(void)
 	  setTimer0(1000);
  80001d4:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  80001d8:	f000 fb44 	bl	8000864 <setTimer0>
-	  //update7SEG(index_led++);
 	}
 	if(timer1_flag == 1){
  80001dc:	4b11      	ldr	r3, [pc, #68]	; (8000224 <main+0xd8>)
