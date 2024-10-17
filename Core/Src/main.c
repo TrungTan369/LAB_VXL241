@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "software_timer.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -49,10 +49,6 @@ int led_buffer[4] = {1, 2, 3, 4};
 int index_led = 0;
 const int MAX_LED = 4;
 
-
-const int set_counter = 15;
-int counter = set_counter;
-
 uint8_t row_data;
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
@@ -73,20 +69,7 @@ void updateLEDMatrix(int);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int timer0_counter = 0;
-int timer0_flag = 0;
-int TIMER_CYCLE = 10;
-void setTimer0(int duration){
-	timer0_counter = duration / TIMER_CYCLE;
-	timer0_flag = 0;
-}
-void timer_run(){
-	if(timer0_counter > 0){
-		timer0_counter--;
-		if(timer0_counter == 0)
-			timer0_flag = 1;
-	}
-}
+
 /* USER CODE END 0 */
 
 /**
@@ -124,21 +107,41 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer0(1000);
+  setTimer0(SET_COUNTER0);
+  setTimer1(SET_COUNTER1);
   while (1)
   {
-	  // ex9 run
-	  if(timer0_flag == 1){
+	  // ex 8 & ex9 run
+		if(second >= 60){
+		  second = 0;
+		  minute++;
+		}
+		if(minute >= 60){
+		  minute = 0;
+		  hour++;
+		}
+		if(hour >= 24){
+		  hour = 0;
+		}
+		if(timer0_flag == 1){
+		  second++;
+		  updateClockBuffer();
 		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-		  setTimer0(1000);
-	  }
-	  if(counter <= 0 ){
-		  counter = set_counter;
+		  setTimer0(SET_COUNTER0);
+		  update7SEG(index_led++);
 		  updateLEDMatrix(index_led_matrix++);
-	  }
-	  if (index_led_matrix >= MAX_LED_MATRIX) {
-	  		index_led_matrix = 0;
-	  	}
+		}
+		if(timer1_flag == 1){
+			setTimer1(SET_COUNTER1);
+			update7SEG(index_led++);
+			updateLEDMatrix(index_led_matrix++);
+		}
+		if (index_led >= MAX_LED) {
+			index_led = 0;
+		}
+		if (index_led_matrix >= MAX_LED_MATRIX) {
+			index_led_matrix = 0;
+		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -283,7 +286,6 @@ static void MX_GPIO_Init(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
 	timer_run();
-	counter--;
 }
 void updateLEDMatrix(int index){
     HAL_GPIO_WritePin(ENM0_GPIO_Port, ENM0_Pin, SET);
@@ -333,7 +335,6 @@ void updateLEDMatrix(int index){
 	HAL_GPIO_WritePin(ROW6_GPIO_Port, ROW6_Pin, (row_data & 0x40) ? RESET : SET);
 	HAL_GPIO_WritePin(ROW7_GPIO_Port, ROW7_Pin, (row_data & 0x80) ? RESET : SET);
 }
-
 void update7SEG(int index){
 	HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
 	HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
